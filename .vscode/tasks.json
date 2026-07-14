@@ -1,0 +1,114 @@
+{
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "C/C++: g++.exe build debug",
+            "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "-std=c++23",
+                "${workspaceFolder}\\source\\*.cpp",
+                "${workspaceFolder}\\external\\imgui-1.92.8\\*.cpp",
+                "${workspaceFolder}\\external\\imgui-1.92.8\\backends\\imgui_impl_sdl3.cpp",
+                "${workspaceFolder}\\external\\imgui-1.92.8\\backends\\imgui_impl_sdlrenderer3.cpp",
+                "-o",
+                "${workspaceFolder}\\out\\debug\\main.exe",
+                "-I${workspaceFolder}\\headers",
+                "-I${workspaceFolder}\\external\\imgui-1.92.8",
+                "-I${workspaceFolder}\\external\\imgui-1.92.8\\backends",
+                "-I${workspaceFolder}\\external\\SDL3-3.4.12\\x86_64-w64-mingw32\\include",
+                "-L${workspaceFolder}\\external\\SDL3-3.4.12\\x86_64-w64-mingw32\\lib",
+                "-lSDL3"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Debug build"
+        },
+        {
+            "type": "cppbuild",
+            "label": "C/C++: g++.exe build release",
+            "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-O2",
+                "-std=c++23",
+                "${workspaceFolder}\\source\\*.cpp",
+                "${workspaceFolder}\\external\\imgui-1.92.8\\*.cpp",
+                "${workspaceFolder}\\external\\imgui-1.92.8\\backends\\imgui_impl_sdl3.cpp",
+                "${workspaceFolder}\\external\\imgui-1.92.8\\backends\\imgui_impl_sdlrenderer3.cpp",
+                "-o",
+                "${workspaceFolder}\\out\\release\\main.exe",
+                "-I${workspaceFolder}\\headers",
+                "-I${workspaceFolder}\\external\\imgui-1.92.8",
+                "-I${workspaceFolder}\\external\\imgui-1.92.8\\backends",
+                "-I${workspaceFolder}\\external\\SDL3-3.4.12\\x86_64-w64-mingw32\\include",
+                "-L${workspaceFolder}\\external\\SDL3-3.4.12\\x86_64-w64-mingw32\\lib",
+                "-lSDL3"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Release build"
+        },
+        {
+            "label": "copy SDL3.dll (debug)",
+            "type": "shell",
+            "command": "cmd",
+            "args": [
+                "/c",
+                "copy",
+                "/Y",
+                "${workspaceFolder}\\external\\SDL3-3.4.12\\x86_64-w64-mingw32\\bin\\SDL3.dll",
+                "${workspaceFolder}\\out\\debug\\"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "copy SDL3.dll (release)",
+            "type": "shell",
+            "command": "cmd",
+            "args": [
+                "/c",
+                "copy",
+                "/Y",
+                "${workspaceFolder}\\external\\SDL3-3.4.12\\x86_64-w64-mingw32\\bin\\SDL3.dll",
+                "${workspaceFolder}\\out\\release\\"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "build debug + copy",
+            "dependsOn": [
+                "C/C++: g++.exe build debug",
+                "copy SDL3.dll (debug)"
+            ],
+            "dependsOrder": "sequence",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "build release + copy",
+            "dependsOn": [
+                "C/C++: g++.exe build release",
+                "copy SDL3.dll (release)"
+            ],
+            "dependsOrder": "sequence",
+            "group": "build",
+            "problemMatcher": []
+        }
+    ],
+    "version": "2.0.0"
+}

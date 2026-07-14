@@ -1,0 +1,7 @@
+# Tasks — 001 Create structure to contain maze definition
+
+[x] T1 — Create `maze.h`
+[x] T2 — Add public local enum CellType
+[x] T3 — Add fields Width and Height
+[x] T4 — Add field Cells
+[x] T5 — Add methods to save an restore contents from a binary file

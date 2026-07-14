@@ -1,0 +1,1 @@
+Generate the project described by AGENTS.md
