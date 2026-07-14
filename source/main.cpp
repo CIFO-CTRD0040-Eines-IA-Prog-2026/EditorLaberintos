@@ -5,6 +5,7 @@
 #include <backends/imgui_impl_sdlrenderer3.h>
 #include "maze.h"
 #include "EditionInterface.h"
+#include "NavigationManager.h"
 
 static void ApplyStyle()
 {
@@ -53,6 +54,7 @@ int main(int _iArgc, char* _sArgv[])
 
     Maze oMaze(10, 10);
     EditionInterface oEdition(pWindow, oMaze);
+    NavigationManager oNav(oMaze);
 
     SDL_Event oEvent;
     int iRunning = 1;
@@ -72,6 +74,7 @@ int main(int _iArgc, char* _sArgv[])
         ImGui::NewFrame();
 
         oEdition.Update();
+        oNav.Update(SDL_GetTicks());
 
         ImGui::Render();
         SDL_SetRenderDrawColor(pRenderer, 52, 58, 64, 255);

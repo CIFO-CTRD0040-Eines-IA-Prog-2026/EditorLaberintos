@@ -9,5 +9,5 @@ Create a structure containing data descriving a maze
 002-edition-interface - STATE DONE
 Create maze edition interface with file operations, dimensions editing and cell grid editing
 
-003-navigation-controller - STATE PENDING
-Create a component that handles navigatigng between maze cells
+003-navigation-controller - STATE DONE
+Create a component that handles navigating between maze cells

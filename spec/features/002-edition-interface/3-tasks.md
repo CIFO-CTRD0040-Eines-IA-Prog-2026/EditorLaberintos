@@ -1,4 +1,4 @@
-# Tasks —002 Create maze edition interface
+# Tasks — 002 Create maze edition interface
 
 [x] T1 — Create a floating interface window
 [x] T2 — Add `Abrir` button
