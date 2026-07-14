@@ -1,16 +1,8 @@
 #ifndef NAVIGATIONMANAGER_H
 #define NAVIGATIONMANAGER_H
 
-#include <cstdint>
+#include "Orientation.h"
 #include "maze.h"
-
-enum class Orientation : uint8_t
-{
-    Up,
-    Down,
-    Left,
-    Right
-};
 
 class NavigationManager
 {
@@ -18,6 +10,9 @@ public:
     NavigationManager(Maze& _oMaze);
 
     void Update(uint32_t _uNow);
+    void SetPosition(unsigned int _uX, unsigned int _uY);
+    void SetOrientation(Orientation _eOrientation);
+    void ResetPosition();
 
     unsigned int GetX() const { return m_uX; }
     unsigned int GetY() const { return m_uY; }
@@ -35,6 +30,10 @@ private:
 
     bool NavigateForward();
     bool NavigateBackward();
+    bool StrafeLeft();
+    bool StrafeRight();
+    bool StrafeUp();
+    bool StrafeDown();
     void TurnLeft();
     void TurnRight();
     void SetRandomFloorPosition();

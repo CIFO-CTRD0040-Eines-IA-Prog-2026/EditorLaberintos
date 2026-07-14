@@ -3,5 +3,6 @@
 [x] T1 — Create `maze.h`
 [x] T2 — Add public local enum CellType
 [x] T3 — Add fields Width and Height
-[x] T4 — Add field Cells
-[x] T5 — Add methods to save an restore contents from a binary file
+[ ] T4 — Add current navigator position and orientation
+[x] T5 — Add field Cells
+[ ] T6 — Add methods to save an restore contents from a binary file

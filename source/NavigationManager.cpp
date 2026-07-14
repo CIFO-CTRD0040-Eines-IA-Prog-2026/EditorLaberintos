@@ -27,51 +27,104 @@ void NavigationManager::Update(uint32_t _uNow)
     }
 
     const bool* pKeys = SDL_GetKeyboardState(NULL);
+    bool bShift = pKeys[SDL_SCANCODE_LSHIFT] || pKeys[SDL_SCANCODE_RSHIFT];
 
-    if (pKeys[SDL_SCANCODE_LEFT])
+    if (bShift)
     {
-        if (m_uLastTurnTime == 0 || _uNow - m_uLastTurnTime >= COOLDOWN_MS)
+        if (pKeys[SDL_SCANCODE_LEFT])
         {
-            TurnLeft();
-            m_uLastTurnTime = _uNow;
+            if (m_uLastMoveTime == 0 || _uNow - m_uLastMoveTime >= COOLDOWN_MS)
+            {
+                if (StrafeLeft())
+                {
+                    m_uLastMoveTime = _uNow;
+                }
+            }
         }
-    }
-    else if (pKeys[SDL_SCANCODE_RIGHT])
-    {
-        if (m_uLastTurnTime == 0 || _uNow - m_uLastTurnTime >= COOLDOWN_MS)
+        else if (pKeys[SDL_SCANCODE_RIGHT])
         {
-            TurnRight();
-            m_uLastTurnTime = _uNow;
+            if (m_uLastMoveTime == 0 || _uNow - m_uLastMoveTime >= COOLDOWN_MS)
+            {
+                if (StrafeRight())
+                {
+                    m_uLastMoveTime = _uNow;
+                }
+            }
         }
-    }
-    else
-    {
+        else if (pKeys[SDL_SCANCODE_UP])
+        {
+            if (m_uLastMoveTime == 0 || _uNow - m_uLastMoveTime >= COOLDOWN_MS)
+            {
+                if (StrafeUp())
+                {
+                    m_uLastMoveTime = _uNow;
+                }
+            }
+        }
+        else if (pKeys[SDL_SCANCODE_DOWN])
+        {
+            if (m_uLastMoveTime == 0 || _uNow - m_uLastMoveTime >= COOLDOWN_MS)
+            {
+                if (StrafeDown())
+                {
+                    m_uLastMoveTime = _uNow;
+                }
+            }
+        }
+        else
+        {
+            m_uLastMoveTime = 0;
+        }
+
         m_uLastTurnTime = 0;
     }
-
-    if (pKeys[SDL_SCANCODE_UP])
-    {
-        if (m_uLastMoveTime == 0 || _uNow - m_uLastMoveTime >= COOLDOWN_MS)
-        {
-            if (NavigateForward())
-            {
-                m_uLastMoveTime = _uNow;
-            }
-        }
-    }
-    else if (pKeys[SDL_SCANCODE_DOWN])
-    {
-        if (m_uLastMoveTime == 0 || _uNow - m_uLastMoveTime >= COOLDOWN_MS)
-        {
-            if (NavigateBackward())
-            {
-                m_uLastMoveTime = _uNow;
-            }
-        }
-    }
     else
     {
-        m_uLastMoveTime = 0;
+        if (pKeys[SDL_SCANCODE_LEFT])
+        {
+            if (m_uLastTurnTime == 0 || _uNow - m_uLastTurnTime >= COOLDOWN_MS)
+            {
+                TurnLeft();
+                m_uLastTurnTime = _uNow;
+            }
+        }
+        else if (pKeys[SDL_SCANCODE_RIGHT])
+        {
+            if (m_uLastTurnTime == 0 || _uNow - m_uLastTurnTime >= COOLDOWN_MS)
+            {
+                TurnRight();
+                m_uLastTurnTime = _uNow;
+            }
+        }
+        else
+        {
+            m_uLastTurnTime = 0;
+        }
+
+        if (pKeys[SDL_SCANCODE_UP])
+        {
+            if (m_uLastMoveTime == 0 || _uNow - m_uLastMoveTime >= COOLDOWN_MS)
+            {
+                if (NavigateForward())
+                {
+                    m_uLastMoveTime = _uNow;
+                }
+            }
+        }
+        else if (pKeys[SDL_SCANCODE_DOWN])
+        {
+            if (m_uLastMoveTime == 0 || _uNow - m_uLastMoveTime >= COOLDOWN_MS)
+            {
+                if (NavigateBackward())
+                {
+                    m_uLastMoveTime = _uNow;
+                }
+            }
+        }
+        else
+        {
+            m_uLastMoveTime = 0;
+        }
     }
 }
 
@@ -139,6 +192,94 @@ bool NavigationManager::NavigateBackward()
     return true;
 }
 
+bool NavigationManager::StrafeLeft()
+{
+    if (m_oMaze.GetCell(m_uX, m_uY) != CellType::Floor)
+    {
+        return false;
+    }
+
+    int iTargetX = static_cast<int>(m_uX) - 1;
+    int iTargetY = static_cast<int>(m_uY);
+
+    if (iTargetX < 0) return false;
+
+    unsigned int uTargetX = static_cast<unsigned int>(iTargetX);
+    unsigned int uTargetY = static_cast<unsigned int>(iTargetY);
+
+    if (!m_oMaze.IsInBounds(uTargetX, uTargetY)) return false;
+    if (m_oMaze.GetCell(uTargetX, uTargetY) != CellType::Floor) return false;
+
+    m_uX = uTargetX;
+    LogAction("Strafe left");
+    return true;
+}
+
+bool NavigationManager::StrafeRight()
+{
+    if (m_oMaze.GetCell(m_uX, m_uY) != CellType::Floor)
+    {
+        return false;
+    }
+
+    int iTargetX = static_cast<int>(m_uX) + 1;
+    int iTargetY = static_cast<int>(m_uY);
+
+    unsigned int uTargetX = static_cast<unsigned int>(iTargetX);
+    unsigned int uTargetY = static_cast<unsigned int>(iTargetY);
+
+    if (!m_oMaze.IsInBounds(uTargetX, uTargetY)) return false;
+    if (m_oMaze.GetCell(uTargetX, uTargetY) != CellType::Floor) return false;
+
+    m_uX = uTargetX;
+    LogAction("Strafe right");
+    return true;
+}
+
+bool NavigationManager::StrafeUp()
+{
+    if (m_oMaze.GetCell(m_uX, m_uY) != CellType::Floor)
+    {
+        return false;
+    }
+
+    int iTargetX = static_cast<int>(m_uX);
+    int iTargetY = static_cast<int>(m_uY) - 1;
+
+    if (iTargetY < 0) return false;
+
+    unsigned int uTargetX = static_cast<unsigned int>(iTargetX);
+    unsigned int uTargetY = static_cast<unsigned int>(iTargetY);
+
+    if (!m_oMaze.IsInBounds(uTargetX, uTargetY)) return false;
+    if (m_oMaze.GetCell(uTargetX, uTargetY) != CellType::Floor) return false;
+
+    m_uY = uTargetY;
+    LogAction("Strafe up");
+    return true;
+}
+
+bool NavigationManager::StrafeDown()
+{
+    if (m_oMaze.GetCell(m_uX, m_uY) != CellType::Floor)
+    {
+        return false;
+    }
+
+    int iTargetX = static_cast<int>(m_uX);
+    int iTargetY = static_cast<int>(m_uY) + 1;
+
+    unsigned int uTargetX = static_cast<unsigned int>(iTargetX);
+    unsigned int uTargetY = static_cast<unsigned int>(iTargetY);
+
+    if (!m_oMaze.IsInBounds(uTargetX, uTargetY)) return false;
+    if (m_oMaze.GetCell(uTargetX, uTargetY) != CellType::Floor) return false;
+
+    m_uY = uTargetY;
+    LogAction("Strafe down");
+    return true;
+}
+
 void NavigationManager::TurnLeft()
 {
     switch (m_eOrientation)
@@ -161,6 +302,25 @@ void NavigationManager::TurnRight()
         case Orientation::Left:  m_eOrientation = Orientation::Up;    break;
     }
     LogAction("Turn right");
+}
+
+void NavigationManager::SetPosition(unsigned int _uX, unsigned int _uY)
+{
+    if (m_oMaze.IsInBounds(_uX, _uY) && m_oMaze.GetCell(_uX, _uY) == CellType::Floor)
+    {
+        m_uX = _uX;
+        m_uY = _uY;
+    }
+}
+
+void NavigationManager::SetOrientation(Orientation _eOrientation)
+{
+    m_eOrientation = _eOrientation;
+}
+
+void NavigationManager::ResetPosition()
+{
+    SetRandomFloorPosition();
 }
 
 void NavigationManager::SetRandomFloorPosition()

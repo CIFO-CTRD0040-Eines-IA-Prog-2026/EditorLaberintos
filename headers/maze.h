@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <cstdint>
+#include "Orientation.h"
 
 enum class CellType : uint8_t
 {
@@ -15,6 +16,10 @@ struct Maze
     unsigned int m_uWidth;
     unsigned int m_uHeight;
     std::vector<CellType> m_oCells;
+
+    unsigned int m_uNavX;
+    unsigned int m_uNavY;
+    Orientation m_eNavOrientation;
 
     Maze(unsigned int _uWidth, unsigned int _uHeight);
 

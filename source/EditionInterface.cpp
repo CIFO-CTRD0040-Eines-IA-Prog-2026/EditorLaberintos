@@ -15,9 +15,11 @@ static const ImVec4 COLOR_FLOOR(206.0f / 255.0f, 212.0f / 255.0f, 218.0f / 255.0
 static const ImVec4 COLOR_WALL_HOVER(70.0f / 255.0f, 78.0f / 255.0f, 84.0f / 255.0f, 1.0f);
 static const ImVec4 COLOR_FLOOR_HOVER(220.0f / 255.0f, 226.0f / 255.0f, 232.0f / 255.0f, 1.0f);
 
-EditionInterface::EditionInterface(SDL_Window* _pWindow, Maze& _oMaze)
+EditionInterface::EditionInterface(SDL_Window* _pWindow, Maze& _oMaze, NavigationManager& _oNav)
     : m_pWindow(_pWindow)
     , m_oMaze(_oMaze)
+    , m_oNav(_oNav)
+    , m_oMarker(_oNav)
     , m_bUnsavedChanges(false)
     , m_bShowDiscardConfirm(false)
 {
@@ -261,6 +263,11 @@ void EditionInterface::RenderCellsGrid()
                 m_bUnsavedChanges = true;
             }
 
+            if (ImGui::IsItemClicked(ImGuiMouseButton_Right) && eCell == CellType::Floor)
+            {
+                m_oNav.SetPosition(uX, uY);
+            }
+
             ImGui::PopStyleColor(2);
             ImGui::PopID();
 
@@ -270,6 +277,11 @@ void EditionInterface::RenderCellsGrid()
             }
         }
     }
+
+    ImVec2 oChildPos = ImGui::GetWindowPos();
+    float fScrollX = ImGui::GetScrollX();
+    float fScrollY = ImGui::GetScrollY();
+    m_oMarker.Render(ImGui::GetWindowDrawList(), oChildPos.x - fScrollX, oChildPos.y - fScrollY, fCellSize, fLineWidth);
 
     ImGui::PopStyleVar(3);
     ImGui::EndChild();
@@ -286,6 +298,9 @@ void EditionInterface::DoOpen(const std::string& _sPath)
 
     m_sCurrentFilePath = _sPath;
     m_bUnsavedChanges = false;
+
+    m_oNav.SetPosition(oLoaded.m_uNavX, oLoaded.m_uNavY);
+    m_oNav.SetOrientation(oLoaded.m_eNavOrientation);
 }
 
 void EditionInterface::DoSave()
@@ -297,12 +312,18 @@ void EditionInterface::DoSave()
         return;
     }
 
+    m_oMaze.m_uNavX = m_oNav.GetX();
+    m_oMaze.m_uNavY = m_oNav.GetY();
+    m_oMaze.m_eNavOrientation = m_oNav.GetOrientation();
     m_oMaze.Save(m_sCurrentFilePath.c_str());
     m_bUnsavedChanges = false;
 }
 
 void EditionInterface::DoSaveAs(const std::string& _sPath)
 {
+    m_oMaze.m_uNavX = m_oNav.GetX();
+    m_oMaze.m_uNavY = m_oNav.GetY();
+    m_oMaze.m_eNavOrientation = m_oNav.GetOrientation();
     m_oMaze.Save(_sPath.c_str());
     m_sCurrentFilePath = _sPath;
     m_bUnsavedChanges = false;

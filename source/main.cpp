@@ -53,8 +53,8 @@ int main(int _iArgc, char* _sArgv[])
     ApplyStyle();
 
     Maze oMaze(10, 10);
-    EditionInterface oEdition(pWindow, oMaze);
     NavigationManager oNav(oMaze);
+    EditionInterface oEdition(pWindow, oMaze, oNav);
 
     SDL_Event oEvent;
     int iRunning = 1;

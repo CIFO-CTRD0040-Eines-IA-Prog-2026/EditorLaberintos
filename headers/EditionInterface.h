@@ -5,11 +5,12 @@
 #include <mutex>
 #include <SDL3/SDL_video.h>
 #include "maze.h"
+#include "NavigationMarker.h"
 
 class EditionInterface
 {
 public:
-    EditionInterface(SDL_Window* _pWindow, Maze& _oMaze);
+    EditionInterface(SDL_Window* _pWindow, Maze& _oMaze, NavigationManager& _oNav);
     ~EditionInterface() = default;
 
     void Update();
@@ -18,6 +19,8 @@ public:
 private:
     SDL_Window* m_pWindow;
     Maze& m_oMaze;
+    NavigationManager& m_oNav;
+    NavigationMarker m_oMarker;
     std::string m_sCurrentFilePath;
     bool m_bUnsavedChanges;
 
