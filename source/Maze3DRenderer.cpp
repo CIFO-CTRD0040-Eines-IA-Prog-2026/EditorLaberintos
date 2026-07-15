@@ -5,6 +5,8 @@
 static const SDL_Color COLOR_CEIL  = { 70, 130, 220, 255 };
 static const SDL_Color COLOR_FLOOR = { 139, 90, 43, 255 };
 
+static const float PI = 3.14159265358979323846f;
+
 static const SDL_Color COLOR_WALL_UP    = { 240, 240, 240, 255 };
 static const SDL_Color COLOR_WALL_RIGHT = { 128, 128, 128, 255 };
 static const SDL_Color COLOR_WALL_DOWN  = { 64, 64, 64, 255 };
@@ -80,37 +82,15 @@ void Maze3DRenderer::DrawBackground(int _iWidth, int _iHeight)
 
 void Maze3DRenderer::CastRays(int _iWidth, int _iHeight)
 {
-    unsigned int uNavX = m_oNav.GetX();
-    unsigned int uNavY = m_oNav.GetY();
-    Orientation eOrientation = m_oNav.GetOrientation();
+    float fPosX = m_oNav.GetInterpX();
+    float fPosY = m_oNav.GetInterpY();
+    float fAngle = m_oNav.GetInterpAngle();
+    float fRad = fAngle * PI / 180.0f;
 
-    float fDirX = 0.0f;
-    float fDirY = 0.0f;
-    float fPlaneX = 0.0f;
-    float fPlaneY = 0.0f;
-
-    switch (eOrientation)
-    {
-        case Orientation::Up:
-            fDirX = 0.0f;   fDirY = -1.0f;
-            fPlaneX = 1.0f; fPlaneY = 0.0f;
-            break;
-        case Orientation::Down:
-            fDirX = 0.0f;  fDirY = 1.0f;
-            fPlaneX = -1.0f; fPlaneY = 0.0f;
-            break;
-        case Orientation::Left:
-            fDirX = -1.0f; fDirY = 0.0f;
-            fPlaneX = 0.0f; fPlaneY = -1.0f;
-            break;
-        case Orientation::Right:
-            fDirX = 1.0f; fDirY = 0.0f;
-            fPlaneX = 0.0f; fPlaneY = 1.0f;
-            break;
-    }
-
-    float fPosX = static_cast<float>(uNavX) + 0.5f;
-    float fPosY = static_cast<float>(uNavY) + 0.5f;
+    float fDirX = std::sin(fRad);
+    float fDirY = -std::cos(fRad);
+    float fPlaneX = std::cos(fRad);
+    float fPlaneY = std::sin(fRad);
 
     for (int iX = 0; iX < _iWidth; ++iX)
     {

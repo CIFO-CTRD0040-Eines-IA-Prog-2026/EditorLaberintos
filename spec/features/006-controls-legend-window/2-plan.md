@@ -1,4 +1,4 @@
-# Plan — 005 Create a controls legend
+# Plan — 006 Create a controls legend
 
 Floating, foldable and semi-transparent window positioned in the top-left corner of the window
 Conatins a legend of controls as a list of bullet points. In particular the items are:

@@ -20,3 +20,6 @@ Render the maze from the navigator point of view in the background using ray-cas
 
 006-controls-legend-window STATE DONE
 Create a window detailing program controls
+
+007-navigation-interpolation STATE DONE
+Add interpolation animation to both movement and turning

@@ -176,6 +176,7 @@ void EditionInterface::RenderDimensionsPanel()
         m_oMaze.m_uHeight = oNewMaze.m_uHeight;
         m_oMaze.m_oCells = std::move(oNewMaze.m_oCells);
 
+        m_oNav.FinishInterpolation();
         m_bUnsavedChanges = true;
     }
 }
@@ -232,6 +233,7 @@ void EditionInterface::RenderCellsGrid()
                 CellType eNewType = (eCell == CellType::Wall) ? CellType::Floor : CellType::Wall;
                 m_oMaze.SetCell(uX, uY, eNewType);
                 m_bUnsavedChanges = true;
+                m_oNav.FinishInterpolation();
             }
 
             if (ImGui::IsItemClicked(ImGuiMouseButton_Right) && eCell == CellType::Floor)
@@ -270,6 +272,7 @@ void EditionInterface::DoOpen(const std::string& _sPath)
     m_sCurrentFilePath = _sPath;
     m_bUnsavedChanges = false;
 
+    m_oNav.FinishInterpolation();
     m_oNav.SetPosition(oLoaded.m_uNavX, oLoaded.m_uNavY);
     m_oNav.SetOrientation(oLoaded.m_eNavOrientation);
 }
