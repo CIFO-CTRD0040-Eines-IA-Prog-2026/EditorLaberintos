@@ -3,10 +3,11 @@
 #include <imgui.h>
 #include <backends/imgui_impl_sdl3.h>
 #include <backends/imgui_impl_sdlrenderer3.h>
-#include "maze.h"
+#include "Maze.h"
 #include "EditionInterface.h"
 #include "NavigationManager.h"
 #include "Maze3DRenderer.h"
+#include "ControlsLegend.h"
 
 static void ApplyStyle()
 {
@@ -57,6 +58,7 @@ int main(int _iArgc, char* _sArgv[])
     NavigationManager oNav(oMaze);
     EditionInterface oEdition(pWindow, oMaze, oNav);
     Maze3DRenderer o3D(pRenderer, oNav, oMaze);
+    ControlsLegend oLegend;
 
     SDL_Event oEvent;
     int iRunning = 1;
@@ -76,6 +78,7 @@ int main(int _iArgc, char* _sArgv[])
         ImGui::NewFrame();
 
         oEdition.Update();
+        oLegend.Render();
         oNav.Update(SDL_GetTicks());
         o3D.RenderImGui();
 

@@ -1,6 +1,5 @@
 # Plan — 005 Create a 3D view of the maze
 
-Isolated in a new Maze3DRenderer class
 Renders using SDL3 in the background a 3D view of the maze using ray-casting:
     - Every cell is 5 x 5 x 5 meters in size
     - The camera is at the center of the window, 2.5 meters over the floor

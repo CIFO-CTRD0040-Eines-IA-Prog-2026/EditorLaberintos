@@ -1,6 +1,6 @@
 #include <stdexcept>
 #include <fstream>
-#include "maze.h"
+#include "Maze.h"
 
 Maze::Maze(unsigned int _uWidth, unsigned int _uHeight)
     : m_uWidth(_uWidth)

@@ -17,3 +17,6 @@ Integrate navigation manager with the cells edition interface
 
 005-3D-maze-renderer STATE DONE
 Render the maze from the navigator point of view in the background using ray-casting
+
+006-controls-legend-window STATE DONE
+Create a window detailing program controls

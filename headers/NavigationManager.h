@@ -2,7 +2,7 @@
 #define NAVIGATIONMANAGER_H
 
 #include "Orientation.h"
-#include "maze.h"
+#include "Maze.h"
 
 class NavigationManager
 {
@@ -36,7 +36,7 @@ private:
     bool StrafeDown();
     void TurnLeft();
     void TurnRight();
-    void SetRandomFloorPosition();
+    void SetCenterFloorPosition();
     void LogAction(const char* _sAction) const;
 };
 

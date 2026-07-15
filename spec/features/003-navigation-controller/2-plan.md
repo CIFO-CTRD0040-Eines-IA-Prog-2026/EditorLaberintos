@@ -1,7 +1,7 @@
 # Plan — 003 Create a navigation controller
 
 The navigator has a position (the coordinates of a floor cell in the current maze) and an orientation (can be only left, up, right or down)
-By default, the navigator is in a random floor type cell
+By default, the navigator is in the center of the maze
 When restoring a saved maze, the position and orientation is also restored
 If the navigator is in a wall cell or outside of the maze, navigation is fobidden
 It navigate to the neighboring cells using the following keyboard control scheme:

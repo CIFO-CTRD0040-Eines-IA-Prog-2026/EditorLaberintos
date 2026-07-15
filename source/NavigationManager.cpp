@@ -1,7 +1,5 @@
 #include <cstdio>
-#include <random>
-#include <vector>
-#include <utility>
+#include <cstdlib>
 #include <SDL3/SDL.h>
 #include <imgui.h>
 #include "NavigationManager.h"
@@ -14,7 +12,7 @@ NavigationManager::NavigationManager(Maze& _oMaze)
     , m_uLastMoveTime(0)
     , m_uLastTurnTime(0)
 {
-    SetRandomFloorPosition();
+    SetCenterFloorPosition();
 }
 
 void NavigationManager::Update(uint32_t _uNow)
@@ -156,7 +154,6 @@ bool NavigationManager::NavigateForward()
 
     m_uX = uTargetX;
     m_uY = uTargetY;
-    LogAction("Move forward");
     return true;
 }
 
@@ -188,7 +185,6 @@ bool NavigationManager::NavigateBackward()
 
     m_uX = uTargetX;
     m_uY = uTargetY;
-    LogAction("Move backward");
     return true;
 }
 
@@ -211,7 +207,6 @@ bool NavigationManager::StrafeLeft()
     if (m_oMaze.GetCell(uTargetX, uTargetY) != CellType::Floor) return false;
 
     m_uX = uTargetX;
-    LogAction("Strafe left");
     return true;
 }
 
@@ -232,7 +227,6 @@ bool NavigationManager::StrafeRight()
     if (m_oMaze.GetCell(uTargetX, uTargetY) != CellType::Floor) return false;
 
     m_uX = uTargetX;
-    LogAction("Strafe right");
     return true;
 }
 
@@ -255,7 +249,6 @@ bool NavigationManager::StrafeUp()
     if (m_oMaze.GetCell(uTargetX, uTargetY) != CellType::Floor) return false;
 
     m_uY = uTargetY;
-    LogAction("Strafe up");
     return true;
 }
 
@@ -276,7 +269,6 @@ bool NavigationManager::StrafeDown()
     if (m_oMaze.GetCell(uTargetX, uTargetY) != CellType::Floor) return false;
 
     m_uY = uTargetY;
-    LogAction("Strafe down");
     return true;
 }
 
@@ -289,7 +281,6 @@ void NavigationManager::TurnLeft()
         case Orientation::Down:  m_eOrientation = Orientation::Right; break;
         case Orientation::Right: m_eOrientation = Orientation::Up;    break;
     }
-    LogAction("Turn left");
 }
 
 void NavigationManager::TurnRight()
@@ -301,7 +292,6 @@ void NavigationManager::TurnRight()
         case Orientation::Down:  m_eOrientation = Orientation::Left;  break;
         case Orientation::Left:  m_eOrientation = Orientation::Up;    break;
     }
-    LogAction("Turn right");
 }
 
 void NavigationManager::SetPosition(unsigned int _uX, unsigned int _uY)
@@ -320,45 +310,11 @@ void NavigationManager::SetOrientation(Orientation _eOrientation)
 
 void NavigationManager::ResetPosition()
 {
-    SetRandomFloorPosition();
+    SetCenterFloorPosition();
 }
 
-void NavigationManager::SetRandomFloorPosition()
+void NavigationManager::SetCenterFloorPosition()
 {
-    std::vector<std::pair<unsigned int, unsigned int>> oFloorCells;
-
-    for (unsigned int uY = 0; uY < m_oMaze.m_uHeight; ++uY)
-    {
-        for (unsigned int uX = 0; uX < m_oMaze.m_uWidth; ++uX)
-        {
-            if (m_oMaze.GetCell(uX, uY) == CellType::Floor)
-            {
-                oFloorCells.push_back({uX, uY});
-            }
-        }
-    }
-
-    if (!oFloorCells.empty())
-    {
-        std::random_device oRd;
-        std::mt19937 oGen(oRd());
-        std::uniform_int_distribution<size_t> oDist(0, oFloorCells.size() - 1);
-        auto [uX, uY] = oFloorCells[oDist(oGen)];
-        m_uX = uX;
-        m_uY = uY;
-    }
-}
-
-void NavigationManager::LogAction(const char* _sAction) const
-{
-    const char* sOrientStr = "";
-    switch (m_eOrientation)
-    {
-        case Orientation::Up:    sOrientStr = "Up";    break;
-        case Orientation::Down:  sOrientStr = "Down";  break;
-        case Orientation::Left:  sOrientStr = "Left";  break;
-        case Orientation::Right: sOrientStr = "Right"; break;
-    }
-    printf("[NavigationManager] %s -> Position(%u, %u) Orientation(%s)\n",
-           _sAction, m_uX, m_uY, sOrientStr);
+    m_uX = m_oMaze.m_uWidth / 2;
+    m_uY = m_oMaze.m_uHeight / 2;
 }

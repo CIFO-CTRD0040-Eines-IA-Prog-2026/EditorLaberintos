@@ -4,7 +4,7 @@
 #include <string>
 #include <mutex>
 #include <SDL3/SDL_video.h>
-#include "maze.h"
+#include "Maze.h"
 #include "NavigationMarker.h"
 
 class EditionInterface

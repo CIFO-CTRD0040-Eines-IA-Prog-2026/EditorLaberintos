@@ -3,7 +3,7 @@
 
 #include <SDL3/SDL_render.h>
 #include "NavigationManager.h"
-#include "maze.h"
+#include "Maze.h"
 
 class Maze3DRenderer
 {
