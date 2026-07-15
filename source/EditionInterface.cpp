@@ -62,15 +62,7 @@ void EditionInterface::Update()
         if (!m_sPendingSavePath.empty())
         {
             std::string sPath = std::move(m_sPendingSavePath);
-
-            if (fs::exists(sPath))
-            {
-                m_sPendingConfirmPath = sPath;
-            }
-            else
-            {
-                DoSaveAs(sPath);
-            }
+            DoSaveAs(sPath);
         }
     }
 
@@ -80,14 +72,9 @@ void EditionInterface::Update()
         m_bShowDiscardConfirm = false;
     }
 
-    if (!m_sPendingConfirmPath.empty())
-    {
-        ImGui::OpenPopup("Sobrescribir archivo");
-    }
-
     ImGuiViewport* pViewport = ImGui::GetMainViewport();
-    ImGui::SetNextWindowPos(ImVec2(pViewport->WorkPos.x + pViewport->WorkSize.x * 0.70f, pViewport->WorkPos.y), ImGuiCond_FirstUseEver);
-    ImGui::SetNextWindowSize(ImVec2(pViewport->WorkSize.x * 0.30f, pViewport->WorkSize.y), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowPos(ImVec2(pViewport->WorkPos.x + pViewport->WorkSize.x * 0.65f, pViewport->WorkPos.y), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowSize(ImVec2(pViewport->WorkSize.x * 0.35f, pViewport->WorkSize.y), ImGuiCond_FirstUseEver);
 
     ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(52.0f / 255.0f, 58.0f / 255.0f, 64.0f / 255.0f, 0.85f));
     ImGui::Begin("Editor", nullptr, 0);
@@ -112,24 +99,6 @@ void EditionInterface::Update()
         ImGui::SameLine();
         if (ImGui::Button("No"))
         {
-            ImGui::CloseCurrentPopup();
-        }
-        ImGui::EndPopup();
-    }
-
-    if (ImGui::BeginPopupModal("Sobrescribir archivo", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
-    {
-        ImGui::Text("El archivo ya existe. Sobrescribir?");
-        if (ImGui::Button("Si"))
-        {
-            DoSaveAs(m_sPendingConfirmPath);
-            m_sPendingConfirmPath.clear();
-            ImGui::CloseCurrentPopup();
-        }
-        ImGui::SameLine();
-        if (ImGui::Button("No"))
-        {
-            m_sPendingConfirmPath.clear();
             ImGui::CloseCurrentPopup();
         }
         ImGui::EndPopup();

@@ -28,7 +28,6 @@ private:
     std::string m_sPendingOpenPath;
     std::string m_sPendingSavePath;
 
-    std::string m_sPendingConfirmPath;
     bool m_bShowDiscardConfirm;
 
     void RenderFileButtons();

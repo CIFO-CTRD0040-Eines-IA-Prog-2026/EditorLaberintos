@@ -49,13 +49,13 @@ void ControlsLegend::Render()
         return;
     }
 
-    ImGui::TextColored(ImVec4(224.0f / 255.0f, 49.0f / 255.0f, 49.0f / 255.0f, 1.0f), "Controles edicion celdas:");
+    ImGui::TextColored(ImVec4(60.0f / 255.0f, 180.0f / 255.0f, 60.0f / 255.0f, 1.0f), "Controles edicion celdas");
     BulletLegendLine("Click izquierdo", "Intercambia el tipo entre pared y suelo");
     BulletLegendLine("Click derecho", "Indica la posicion de la camara");
 
     ImGui::Separator();
 
-    ImGui::TextColored(ImVec4(224.0f / 255.0f, 49.0f / 255.0f, 49.0f / 255.0f, 1.0f), "Controles navegacion:");
+    ImGui::TextColored(ImVec4(60.0f / 255.0f, 180.0f / 255.0f, 60.0f / 255.0f, 1.0f), "Controles navegacion");
     BulletLegendLine("Flechas arriba y abajo", "Avanzar/retroceder celda en la direccion actual");
     BulletLegendLine("Flechas izquierda y derecha", "Girar 90\xc2\xba a izquierda/derecha");
     BulletLegendLine("Pulsando SHIFT", "Las flechas de cursor mueven de forma absoluta, independientemente de la direccion");

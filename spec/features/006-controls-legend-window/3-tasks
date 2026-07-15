@@ -4,5 +4,5 @@
 [x] T2 — Default width is 25% of the main window width
 [x] T3 — The window cannot be closed
 [x] T4 — Fit all text inside the window (breaking lines when needed)
-[x] T5 — The part to the left of the `:` is highlighted in red (only for items with a right part). Right part in a new line
+[x] T5 — Bullets points with no `:` in green. For the rest, the part to the left of the `:` is highlighted in red. Right part in a new line
 [x] T6 — Control legend window positiones by default at the top-left conrner of the main window

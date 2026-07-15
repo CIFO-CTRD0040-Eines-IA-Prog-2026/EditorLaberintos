@@ -1,7 +1,7 @@
 # 002 — Create maze edition interface
 
 Isolated in a new EditionInterface class.
-Floating ImGUI window aligned to the right side of the main window. It should auto-size to cover the whole vertical area and 30% of the horizontal area.
+Floating ImGUI window aligned to the right side of the main window. It should auto-size to cover the whole vertical area and 35% of the horizontal area.
 The window must be movable, resizeable and fodable.
 Will allow to save and restore mazes from disk (as .lab files) and edit them.
 Use standard file selection dialog to handle file selection.
