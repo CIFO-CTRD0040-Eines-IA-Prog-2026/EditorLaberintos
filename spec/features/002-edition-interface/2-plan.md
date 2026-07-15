@@ -1,5 +1,6 @@
 # Plan — 002 Create maze edition interface
 
+- The background of the interface window must be semi-transparent
 - The interface conatins the following controls
     - Button `Abrir`, to restore a maze file stored in the disk. Include verification of discard the cuurent maze.
     - Button `Guardar`, to save the current maze to its file or a new one if it wasn't previously restored from disk. Include verification to overwite the selected file.

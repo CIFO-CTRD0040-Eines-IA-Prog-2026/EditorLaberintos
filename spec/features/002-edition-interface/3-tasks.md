@@ -6,3 +6,4 @@
 [x] T4 — Add `Guardar como` button
 [x] T5 — Add maze dimensions panel
 [x] T6 — Add cells edition grid
+[x] T7 — Make the interface windows background semi-transparent

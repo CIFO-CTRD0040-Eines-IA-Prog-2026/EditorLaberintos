@@ -6,6 +6,7 @@
 #include "maze.h"
 #include "EditionInterface.h"
 #include "NavigationManager.h"
+#include "Maze3DRenderer.h"
 
 static void ApplyStyle()
 {
@@ -55,6 +56,7 @@ int main(int _iArgc, char* _sArgv[])
     Maze oMaze(10, 10);
     NavigationManager oNav(oMaze);
     EditionInterface oEdition(pWindow, oMaze, oNav);
+    Maze3DRenderer o3D(pRenderer, oNav, oMaze);
 
     SDL_Event oEvent;
     int iRunning = 1;
@@ -75,10 +77,12 @@ int main(int _iArgc, char* _sArgv[])
 
         oEdition.Update();
         oNav.Update(SDL_GetTicks());
+        o3D.RenderImGui();
 
         ImGui::Render();
         SDL_SetRenderDrawColor(pRenderer, 52, 58, 64, 255);
         SDL_RenderClear(pRenderer);
+        o3D.RenderBackground();
         ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), pRenderer);
         SDL_RenderPresent(pRenderer);
     }

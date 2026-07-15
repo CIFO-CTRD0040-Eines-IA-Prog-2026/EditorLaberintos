@@ -89,6 +89,7 @@ void EditionInterface::Update()
     ImGui::SetNextWindowPos(ImVec2(pViewport->WorkPos.x + pViewport->WorkSize.x * 0.70f, pViewport->WorkPos.y), ImGuiCond_FirstUseEver);
     ImGui::SetNextWindowSize(ImVec2(pViewport->WorkSize.x * 0.30f, pViewport->WorkSize.y), ImGuiCond_FirstUseEver);
 
+    ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(52.0f / 255.0f, 58.0f / 255.0f, 64.0f / 255.0f, 0.85f));
     ImGui::Begin("Editor", nullptr, 0);
 
     RenderFileButtons();
@@ -98,6 +99,7 @@ void EditionInterface::Update()
     RenderCellsGrid();
 
     ImGui::End();
+    ImGui::PopStyleColor();
 
     if (ImGui::BeginPopupModal("Descartar cambios", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
     {

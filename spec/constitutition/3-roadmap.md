@@ -12,5 +12,8 @@ Create maze edition interface with file operations, dimensions editing and cell 
 003-navigation-controller - STATE DONE
 Create a component that handles navigating between maze cells
 
-004-navigation-marker-in-cells-grid - STATE PENDING
+004-navigation-marker-in-cells-grid - STATE DONE
 Integrate navigation manager with the cells edition interface
+
+005-3D-maze-renderer STATE DONE
+Render the maze from the navigator point of view in the background using ray-casting
