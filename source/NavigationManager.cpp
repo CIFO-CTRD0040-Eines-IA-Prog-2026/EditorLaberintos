@@ -124,13 +124,14 @@ void NavigationManager::Update(uint32_t _uNow)
         {
             StrafeRight();
         }
-        else if (pKeys[SDL_SCANCODE_UP])
+
+        if (pKeys[SDL_SCANCODE_UP])
         {
-            StrafeUp();
+            NavigateForward();
         }
         else if (pKeys[SDL_SCANCODE_DOWN])
         {
-            StrafeDown();
+            NavigateBackward();
         }
     }
     else
@@ -232,10 +233,18 @@ bool NavigationManager::StrafeLeft()
         return false;
     }
 
-    int iTargetX = static_cast<int>(m_uX) - 1;
+    int iTargetX = static_cast<int>(m_uX);
     int iTargetY = static_cast<int>(m_uY);
 
-    if (iTargetX < 0) return false;
+    switch (m_eOrientation)
+    {
+        case Orientation::Up:    iTargetX -= 1; break;
+        case Orientation::Down:  iTargetX += 1; break;
+        case Orientation::Left:  iTargetY += 1; break;
+        case Orientation::Right: iTargetY -= 1; break;
+    }
+
+    if (iTargetX < 0 || iTargetY < 0) return false;
 
     unsigned int uTargetX = static_cast<unsigned int>(iTargetX);
     unsigned int uTargetY = static_cast<unsigned int>(iTargetY);
@@ -259,60 +268,18 @@ bool NavigationManager::StrafeRight()
         return false;
     }
 
-    int iTargetX = static_cast<int>(m_uX) + 1;
+    int iTargetX = static_cast<int>(m_uX);
     int iTargetY = static_cast<int>(m_uY);
 
-    unsigned int uTargetX = static_cast<unsigned int>(iTargetX);
-    unsigned int uTargetY = static_cast<unsigned int>(iTargetY);
-
-    if (!m_oMaze.IsInBounds(uTargetX, uTargetY)) return false;
-    if (m_oMaze.GetCell(uTargetX, uTargetY) != CellType::Floor) return false;
-
-    m_uPrevX = m_uX;
-    m_uPrevY = m_uY;
-    m_ePrevOrientation = m_eOrientation;
-    m_uX = uTargetX;
-    m_uY = uTargetY;
-    m_uInterpEndTime = SDL_GetTicks() + INTERP_DURATION_MS;
-    return true;
-}
-
-bool NavigationManager::StrafeUp()
-{
-    if (m_oMaze.GetCell(m_uX, m_uY) != CellType::Floor)
+    switch (m_eOrientation)
     {
-        return false;
+        case Orientation::Up:    iTargetX += 1; break;
+        case Orientation::Down:  iTargetX -= 1; break;
+        case Orientation::Left:  iTargetY -= 1; break;
+        case Orientation::Right: iTargetY += 1; break;
     }
 
-    int iTargetX = static_cast<int>(m_uX);
-    int iTargetY = static_cast<int>(m_uY) - 1;
-
-    if (iTargetY < 0) return false;
-
-    unsigned int uTargetX = static_cast<unsigned int>(iTargetX);
-    unsigned int uTargetY = static_cast<unsigned int>(iTargetY);
-
-    if (!m_oMaze.IsInBounds(uTargetX, uTargetY)) return false;
-    if (m_oMaze.GetCell(uTargetX, uTargetY) != CellType::Floor) return false;
-
-    m_uPrevX = m_uX;
-    m_uPrevY = m_uY;
-    m_ePrevOrientation = m_eOrientation;
-    m_uX = uTargetX;
-    m_uY = uTargetY;
-    m_uInterpEndTime = SDL_GetTicks() + INTERP_DURATION_MS;
-    return true;
-}
-
-bool NavigationManager::StrafeDown()
-{
-    if (m_oMaze.GetCell(m_uX, m_uY) != CellType::Floor)
-    {
-        return false;
-    }
-
-    int iTargetX = static_cast<int>(m_uX);
-    int iTargetY = static_cast<int>(m_uY) + 1;
+    if (iTargetX < 0 || iTargetY < 0) return false;
 
     unsigned int uTargetX = static_cast<unsigned int>(iTargetX);
     unsigned int uTargetY = static_cast<unsigned int>(iTargetY);

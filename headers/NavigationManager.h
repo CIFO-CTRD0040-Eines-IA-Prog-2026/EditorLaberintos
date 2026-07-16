@@ -42,8 +42,6 @@ private:
     bool NavigateBackward();
     bool StrafeLeft();
     bool StrafeRight();
-    bool StrafeUp();
-    bool StrafeDown();
     void TurnLeft();
     void TurnRight();
     void SetCenterFloorPosition();

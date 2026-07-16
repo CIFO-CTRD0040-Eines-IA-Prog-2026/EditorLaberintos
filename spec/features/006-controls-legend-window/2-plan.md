@@ -8,7 +8,7 @@ Conatins a legend of controls as a list of bullet points. In particular the item
     - "Controles navegación"
         - "Flechas arriba y abajo: Avanzar/retroceder celda en la dirección actual"
         - "Flechas izquierda y derecha: Girar 90º a izquierda/derecha"
-        - "Pulsando SHIFT: Las flechas de cursor mueven de forma absoluta, independientemente de la dirección"
+        - "Pulsando SHIFT: Las flechas de cursor mueven relativo a la dirección sin cambiarla"
 For each bullet point, the part to the left of the `:` is highlighted in red
 All the text must fit inside the window
 By default the legend window width is at most 25% of the main window

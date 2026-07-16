@@ -58,7 +58,7 @@ void ControlsLegend::Render()
     ImGui::TextColored(ImVec4(60.0f / 255.0f, 180.0f / 255.0f, 60.0f / 255.0f, 1.0f), "Controles navegacion");
     BulletLegendLine("Flechas arriba y abajo", "Avanzar/retroceder celda en la direccion actual");
     BulletLegendLine("Flechas izquierda y derecha", "Girar 90\xc2\xba a izquierda/derecha");
-    BulletLegendLine("Pulsando SHIFT", "Las flechas de cursor mueven de forma absoluta, independientemente de la direccion");
+    BulletLegendLine("Pulsando SHIFT", "Las flechas de cursor mueven relativo a la dirección sin cambiarla");
 
     ImGui::End();
 }

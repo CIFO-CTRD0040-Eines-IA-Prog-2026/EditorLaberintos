@@ -1,2 +1,3 @@
 # EditorLaberintos
-Proyector de Alejandro
+
+Editor de laberintos

@@ -1,15 +1,11 @@
-# AGENTS.md — ProyectoFinal
+# AGENTS.md — EditorLaberintos
 - Developed using Specification-Driven Development (SDD). Folder spec/ is the sole source of thruth.
 
-## REGLES IMPORTANT
+## Importnat rules
 - Apply project skills (.agents/skills/).
 - When asked, do not perform automatic actions. Wait for confirmation. 
 - Work only inside this folder. 
 - Contents in spanish, code & comments in english.
-
-
-
-# AGENTS.md — ProyectoFinal
 
 ## Structure
 - The project has the following structure:
