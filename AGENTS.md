@@ -31,8 +31,8 @@
 
 ## Project structure
 
-- `main.cpp` — single entry point, contains everything.
-- All source files sit flat at the project root, no subdirectory source tree.
+- `main.cpp` — single entry point.
+- External libraries are place din the `external` folder, CPP files in `source`folder and H files in `headers` folder.
 - No tests, no CI, no lint/typecheck pipeline.
 
 ## Toolchain
